@@ -2,6 +2,8 @@
 
 (published in 2007)
 
+[arxiv link](https://arxiv.org/pdf/0707.3670.pdf)
+
 # Introduction
 
 - YouTube is growing fast (aided by the the social networking component of the platform) and is suffering from scalability constraints.
@@ -10,6 +12,7 @@
     - crawl YouTube for a 3 months (in early 2007)
     - authors have obtained 27 datasets totaling over 2.6 million videos. At the time, this was a significant portion of the entire YouTube video repository.
     - most of these videos were accessible from the YouTube homepage <5 clicks, so they were all active videos and could be considered to be fairly representative of measuring the repository.
+- *goal*: to design YouTube for scalability and improved user experience taking into consideration the relationship between videos, the relationship between users, and users and videos, and the features of the videos themselves.
 
 # Background
 
