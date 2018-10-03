@@ -105,7 +105,7 @@ This finding follows from the fact that YouTube uses tags, video titles and desc
 
 - caching frequently accessed data at proxies located close to clients is a good way of saving bandwidth, reducing server load, and improving user experience (reduced delays)
 - there are 3 features of youtube videos that can help in the design of these proxy caches
-    1. # of youtube videos: this number is very very high compared to other video platforms
+    1. the number of youtube videos: this number is very very high compared to other video platforms
     2. size of youtube videos: this is much smaller than a traditional video
     3. view frequencies: these do not fit a zipf distribution
 - Considering this, prefix caching would work better than works full-object caching for web/segment caching
