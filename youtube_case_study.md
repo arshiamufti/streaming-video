@@ -49,7 +49,7 @@ Each video contains the following metadata: user who uploaded it, date when it w
 
 ## Characteristics of YouTube Video
 
-**Category:** music the the post popular
+**Category:** music is the post popular (~23%), followed by entertainment (~18%)
 
 **Video length**
 
@@ -71,7 +71,7 @@ Each video contains the following metadata: user who uploaded it, date when it w
 - when plotting rank vs # of views on a log-log scale, we observe that the curve is **initially** linear, but the tail decreases beyond a rank of around 10^3. [note: the videos used for these measurements were from a single dataset of 100k videos collected in one day, with the set collected as specified in the last section]
 - a gamma distribution fits better (so does weibull, refer to pg 5)
 - discuss with tim: what does this tail mean? and why does it exist?
-- a plot of ratings against the rank als has a similar shape
+- a plot of ratings against the rank also has a similar shape
 
 **Growth trend of the # of views and life span**
 
