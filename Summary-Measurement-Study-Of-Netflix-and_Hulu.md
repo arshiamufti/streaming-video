@@ -1,7 +1,6 @@
-# Summary: Measurement Study of Netflix, Hulu, and a Tale of
-Three CDNs
+# Summary: Measurement Study of Netflix, Hulu, and a Tale of Three CDNs
 
-[link to original paper]([https://ieeexplore.ieee.org/abstract/document/6915771](https://ieeexplore.ieee.org/abstract/document/6915771))
+[link to original paper]([https://ieeexplore.ieee.org/abstract/document/6915771](https://ieeexplore.ieee.org/abstract/document/6915771)
 
 Netflix and Hulu are large video streaming platforms in the US and Canada, with downstream traffic from their platforms accounting for a large fraction of overall internet traffic during peak hours. In this paper, the authors aim to understand the architecture of these platforms, especially their content delivery strategies. They discover that for Netflix, CDN selection is primarily based on users, whereas for Hulu it is independent of most factors (and so, likely done based on business agreements).
 
