@@ -4,7 +4,16 @@
 
 [arxiv link](https://arxiv.org/pdf/0707.3670.pdf)
 
-# Introduction
+## Current stats about YouTube
+
+* 40 minutes, up 50% year-over-year
+* total \# of videos: 5+ billion
+* total \# of daily active users: ~2 billion
+* the default limit for video length is 15 mins, though users can request an increase. Avg length of videos is around 5 minutes, and very popular videos rarely exceed 10 mins in length.
+* for a 480p video encoded in the standard frame rate, youtube recommends a bitrate of **2.5 mbps** [compare this with the most popular bitrate in 2007 being 330 kpbs?]
+* Youtube accounts of ~19% of downstream internet traffic during peak hours
+
+## Introduction
 
 - YouTube is growing fast (aided by the the social networking component of the platform) and is suffering from scalability constraints.
 - In order to efficiently engineer network traffic and sustainably scale the service up, it is essential to have an understanding of the **features of Youtube** and its **usage patterns**.
@@ -38,9 +47,9 @@ Each video contains the following metadata: user who uploaded it, date when it w
     - file size and bit rate information (this had to be retrieved separately)
     - information about YouTube users: number videos uploaded, information about their friends, etc (over 1 million users were crawled)
 
-# Characteristics of YouTube Video
+## Characteristics of YouTube Video
 
-**Category:** music the the post popular
+**Category:** music is the post popular (~23%), followed by entertainment (~18%)
 
 **Video length**
 
@@ -62,7 +71,7 @@ Each video contains the following metadata: user who uploaded it, date when it w
 - when plotting rank vs # of views on a log-log scale, we observe that the curve is **initially** linear, but the tail decreases beyond a rank of around 10^3. [note: the videos used for these measurements were from a single dataset of 100k videos collected in one day, with the set collected as specified in the last section]
 - a gamma distribution fits better (so does weibull, refer to pg 5)
 - discuss with tim: what does this tail mean? and why does it exist?
-- a plot of ratings against the rank als has a similar shape
+- a plot of ratings against the rank also has a similar shape
 
 **Growth trend of the # of views and life span**
 
@@ -99,13 +108,13 @@ The graph formed by related videos in YouTube has the features of a small world 
 
 This finding follows from the fact that YouTube uses tags, video titles and descriptions to find related videos and create this graph.
 
-# Improving YouTube Scalability
+## Improving YouTube Scalability
 
 **Proxy Caching/Storage Management**
 
 - caching frequently accessed data at proxies located close to clients is a good way of saving bandwidth, reducing server load, and improving user experience (reduced delays)
 - there are 3 features of youtube videos that can help in the design of these proxy caches
-    1. # of youtube videos: this number is very very high compared to other video platforms
+    1. the number of youtube videos: this number is very very high compared to other video platforms
     2. size of youtube videos: this is much smaller than a traditional video
     3. view frequencies: these do not fit a zipf distribution
 - Considering this, prefix caching would work better than works full-object caching for web/segment caching
