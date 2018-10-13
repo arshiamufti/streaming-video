@@ -1,5 +1,7 @@
 # Summary: Characterizing the Workload of a Netflix Streaming Video Server
 
+[link to orginal paper by Brecht et al.](https://ieeexplore.ieee.org/document/7581265)
+
 # Part 1: Introduction and Background
 
 ## The Work
