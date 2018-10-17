@@ -92,3 +92,34 @@ From these observations, we can infer the need for providers to have multiple CD
 When ISPs and ASes are overloaded, they can experience quality issues under heavy load. The authors observe that an increase in the load of the AS (i.e., # of sessions increase) is also accompanied by an increase in the re-buffering ratio.
 
 From this, we can see that it ideal for the video delivery infrastructure to be aware of such hotspots. An increase in load can lead to the entire AS getting congested without some mechanism in place to handle the congestion. Note that if the entire AS is overloaded, the load increases on all CDNs, so switching to a different CDN would not help. Therefore, some optimization has to be performed by the content provider as well, such as reducing the bitrate for all views during overload.
+
+# Designing a Control Plane
+
+## Design Parameters
+
+**What parameters can we control?**
+
+- choice of bitrate
+- choice of CDN/server to serve the content.
+
+**When can we choose these parameters?**
+
+- select them at startup time when the video player is launched
+    - *Note:* this is not a robust approach as both changes in **client bandwidth** and **network conditions (such as the condition of the CDN)** can impact the ability of the client to download and buffer user experience.
+- dynamically adapt these midstream in response to changing network conditions
+    - *Note:* this is the current de-facto approach performed **client side**.
+
+**Who decides the values for these parameters?**
+
+- purely client-side mechanisms
+- server-driven configuration
+- alternative "control plane" that either maintains or is aware of global state and selects these parameters
+
+## The Control Plane
+
+**Main Idea:** use a centralized control plane to optimize content delivery.
+The three three key components in the video control plane:
+
+1. a measurement component responsible for actively monitoring the video quality of clients
+2. an oracle that uses historical and current data to predict the potential performance a user will receive for a particular combination of CDN and bitrate at the current time
+3. the global optimization engine that uses the first two components to assign the CDN and bitrate for each user
