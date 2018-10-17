@@ -1,11 +1,9 @@
-## Background
+# Background
 
 As an introduction, the paper introduces two fundamental ideas:
 
 1. The metrics needed to accurately capture and represent the performance of a streaming video application are different than applications with more traditional workloads.
 2. Although streaming video applications are increasingly preferring HTTP chunk-based protocols over more specialized streaming protocols, the architecture of the underlying infrastructure (at the CDN and ISP level) does not leverage the streaming nature of these applications.
-
-The these ideas are elaborated upon in this section
 
 **Idea #1**
 
@@ -17,19 +15,21 @@ Thus, there is a need to introduce new metrics to capture the nature of a viewin
 
 Streaming video applications are increasingly deploying HTTP chunk based protocols, instead of the more traditional, specialized streaming protocols (like RTMP). The ease of deploying these applications on already existing HTTP infrastructure (such as HTTP based CDNs) has in fact led to a rapid increase in the creation of these applications and platforms. Furthermore, a diversity of clients can be allowed to use these systems since HTTP across clients is also ubiquitous.
 
-However, there is a mismatch between the requirements of these applications and the provisions of these HTTP-based infrastructures at the ISP and the CDN level. The authors discover via client-side measurements of over 200 mil client viewing sessions video rebuffering rates, start up times, etc are quite high and average bitrates at which video is streamed is also typically pretty low.
+However, there is a mismatch between the requirements of these applications and the provisions of these HTTP-based infrastructures at the ISP and the CDN level. The authors discover via client-side measurements of over 200 mil client viewing sessions video re-buffering rates, start up times, etc are quite high and average bitrates at which video is streamed is also typically pretty low.
 
-- 20% of sessions experience a rebuffering ratio of ≥ 10%
+- 20% of sessions experience a re-buffering ratio of ≥ 10%
 - 14% of users have to wait more than 10 seconds for video to start up
 - more than 28% of sessions have an average bitrate less than 500Kbps, and 10% of users fail to see any video at all.
 
-From this, it is evident that the underlying video delivery infrastructure is not sufficient as it is. Recall that the **overarching goal** is—to improve the video viewing experience, given an unreliable delivery network.
+From this, it is evident that the underlying video delivery infrastructure is not sufficient as it is. Recall that the **overarching goal**—to improve the video viewing experience, given an unreliable delivery network.
 
 The three questions the authors pose are:
 
 1. What parameters can we adapt? [eg, bitrate, parameters of the CDN]
 2. When should these parameters be optimized? [at video startup? mid stream?]
 3. Who sets these parameters? [the client? the server?]
+
+# Current Infrastructure
 
 ## Overview of the current infrastructure
 
@@ -41,6 +41,7 @@ As a first step, the authors examine the performance of today’s delivery infra
 91 popular video content providers around the world.
 - The content served includes both live and video-on-demand video, but since similar results were observed from both types of traffic, only aggregated data is shown.
 - Client side statistics regarding the current network conditions (e.g., estimated bandwidth to the chosen CDN server) and the observed video quality (e.g., re-buffering ratio, chosen bitrate) were collected.
+- Sessions that lasted < 1 minute were not included in the analysis since they usually came from users are not interested in the video.
 
 **Metrics**
 
@@ -53,3 +54,40 @@ As explained in the introduction, metrics that have an accurate impact on user e
     - *Note*: these errors are typically related to the CDN (i.e., edge servers are missing data or are overloaded and therefore rejecting new connections)
 - Exits before video start: The % of sessions that failed to play the video **without** experiencing a fatal error.
     - *Note*: these "errors" are usually user related — they occur because users are not interested in the con- tent or because they waited too long for the video to load and lost patience.
+
+**Observations**
+
+- 40% of the views experience at least 1% re-buffering ratio. 20% experience at least 10% re-buffering ratio.
+- 23% of the views wait more than 5 seconds before video starts. 14% wait more than 10 seconds.
+- 28% of the views have average bitrate less than 500Kbps, and 74.1% have average bitrate less than 1Mbps.
+
+These metrics can have a huge impact on user experience and engagement. Even a 1% increase in the re-buffering ratio can reduce total play time by several minutes. It has also been observed that playing videos at a consistently high bitrate is strongly correlated with longer viewing sessions.
+
+## Explaining the current infrastructure
+
+In this section, the authors examine three potential issues that could result in the poor video quality observed.
+
+**1) Client-side variability**
+
+The measured client-side inter- and inter-session bandwidth is quite variable. That is, picking the same starting bitrate for every session probably wont work. Keeping the bitrate constant over entire viewing session won't provide good user engagement either. Thus, there is a need for intelligent bitrate selection and switching. Specifically:
+
+- we need to choose a bitrate at the start of each session to account for inter-session variability
+- we need to dynamically adapt the bitrate midstream to account for intra-session variability
+
+**2) CDN variability across space and time**
+
+The performance of CDN infrastructure for delivering video can vary significantly both spatially (e.g., across ISPs or across geographical regions) and temporally. Such variation can be caused by load, misconfiguration (e.g., content not reaching a CDN’s edge servers), or other network conditions. Our goal is not to diagnose the root causes of these problems (e.g., [32]), but to show that they occur in the wild.
+
+- The performance of different CDNs can vary within a given city
+- For each metric, no single CDN is optimal across all cities.
+- CDNs may differ in their performance across metrics. For example, wrt video startup time, one CDN may perform but wrt failure rate, it may perform the worst.
+- No CDN has the best performance all the time. Every CDN experiences some performance issues over time
+- The re-buffering ratio and failure rate of a CDN may experience high fluctuations over time.
+
+From these observations, we can infer the need for providers to have multiple CDNs to optimize delivery across different geographical regions and over time. It also suggests that dynamically choosing a CDN can potentially improve the overall video quality.
+
+**3) AS under stress**
+
+When ISPs and ASes are overloaded, they can experience quality issues under heavy load. The authors observe that an increase in the load of the AS (i.e., # of sessions increase) is also accompanied by an increase in the re-buffering ratio.
+
+From this, we can see that it ideal for the video delivery infrastructure to be aware of such hotspots. An increase in load can lead to the entire AS getting congested without some mechanism in place to handle the congestion. Note that if the entire AS is overloaded, the load increases on all CDNs, so switching to a different CDN would not help. Therefore, some optimization has to be performed by the content provider as well, such as reducing the bitrate for all views during overload.
