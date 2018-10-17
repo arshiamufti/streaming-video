@@ -76,8 +76,9 @@ The measured client-side inter- and inter-session bandwidth is quite variable. T
 
 **2) CDN variability across space and time**
 
-The performance of CDN infrastructure for delivering video can vary significantly both spatially (e.g., across ISPs or across geographical regions) and temporally. Such variation can be caused by load, misconfiguration (e.g., content not reaching a CDN’s edge servers), or other network conditions. Our goal is not to diagnose the root causes of these problems (e.g., [32]), but to show that they occur in the wild.
+The performance of CDN infrastructure for delivering video can vary significantly both across space (across ISPs or geographical regions) and time. This could be caused by a variety of reasons: changes in load or misconfiguration (content missing from edge servers) or other temporal network conditions.
 
+According to the authors' observations:
 - The performance of different CDNs can vary within a given city
 - For each metric, no single CDN is optimal across all cities.
 - CDNs may differ in their performance across metrics. For example, wrt video startup time, one CDN may perform but wrt failure rate, it may perform the worst.
