@@ -1,3 +1,6 @@
+# Summary: A case for a coordinated internet video control plane
+
+
 [link to original paper](https://dl.acm.org/citation.cfm?id=2342431)
 
 # Background
