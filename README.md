@@ -1,6 +1,6 @@
 # streaming-video
 
-CS 449R (reading in streaming video) with Tim Brecht
+CS 449R (readings in streaming video) with Tim Brecht
 
 ## Papers Summarized
 
