@@ -15,7 +15,7 @@ CS 449R (readings in streaming video) with Tim Brecht
 9. [An analysis of the YouNow live streaming platform](/Summary_YouNow.md)
 10. [DASH in Twitch: Adaptive Bitrate Streaming in Live Game Streaming Platforms](/Summary_ABR_in_Twitch.md)
 11. Transcoding live adaptive video streams at a massive scale in the cloud (in progress) | [link](https://dl.acm.org/citation.cfm?id=2713177)
-12. A Campus-Level View of Netflix and Twitch: Characterization and Performance Implications (in progress) | [link](https://ieeexplore.ieee.org/document/8046774/)
+12. [A Campus-Level View of Netflix and Twitch: Characterization and Performance Implications](/Summary_Netflix_Twitch_on_campus.md)
 
 ## Resources
 
